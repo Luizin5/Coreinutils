@@ -4,14 +4,16 @@ desc "compile all files"
 task :all do
 
   print "compiling"
-  Dir["./*.go"].each { |f| 
+  Dir["./src/*.go"]::each { |f| 
     print(".")
     system("go build #{f}")
 
-    sf = f.split("")
-    3.times { sf.pop }
+    sf = f.gsub("./src/","")
+      .gsub(".go","")
+    p sf  
 
-    FileUtils.move("#{sf.join("")}","./bins/",force: true)
+
+    FileUtils.move("#{sf}","./bins",force: true)
     print(".")
   }
   print(".  OK\n")
