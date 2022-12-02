@@ -1,18 +1,17 @@
 package main
 
 import (
-	Args "coreutils/getargs"
+	"os"
+	"strings"
 )
 
 func main() {
-	var args = Args.Get()
-	if args == "" {
-		print_loop("y")
+	args := os.Args
+	if len(args) < 2 {
+	    for { println("y") }
 	} else {
-		print_loop(args)
+	    for { 
+	      println( strings.Join( args[1:]," ") ) 
+	    }
 	}
-}
-
-func print_loop(str string)  {
-	for { println(str) }
 }
