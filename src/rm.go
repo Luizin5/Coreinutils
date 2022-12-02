@@ -2,33 +2,28 @@ package main
 
 import (
 "os"
-
+"flag"
 //"log"
 )
 
 func main()  {
-	args := os.Args
-	var directory string
-	var option string
-	if args[1] == "-rf"{
-		directory = args[2]
-		option = args[1]
-	} else {
-		directory = args[1]
-		option = ""
-	}
+      
+	directory := os.Args[2]
+	option := flag.Bool("rf",false,"remove directories that's not empty")
+	flag.Parse()
+	
 	if !del(directory,option)  {
 		println("error")
 	}
 }
 
-func del(dir, option string) bool {
+func del(dir string, option * bool) bool {
     fileinfo, _ := os.Stat(dir)
 
-    if option == "-rf" && fileinfo.IsDir() {
+    if *option && fileinfo.IsDir() {
 	os.RemoveAll(dir)
 	return true
-    } else if option != "-rf" && !fileinfo.IsDir()  {
+    } else if !fileinfo.IsDir() {
 	os.Remove(dir)
 	return true
     }
